@@ -694,6 +694,7 @@ class RoomBackup(var context: Context) : FragmentActivity() {
      * If granted backup or restore process starts
      */
     private val permissionRequestLauncher = (context as ComponentActivity).registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
         permissions.entries.forEach {
             if (!it.value) {
                 onCompleteListener?.onComplete(
