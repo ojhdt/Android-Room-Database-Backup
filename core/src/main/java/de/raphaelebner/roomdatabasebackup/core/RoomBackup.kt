@@ -694,15 +694,16 @@ class RoomBackup(var context: Context) : FragmentActivity() {
      * If granted backup or restore process starts
      */
     private val permissionRequestLauncher = (context as ComponentActivity).registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
-        permissions.entries.forEach {
-            if (!it.value) {
-                onCompleteListener?.onComplete(
-                    false,
-                    "storage permissions are required, please allow!",
-                    OnCompleteListener.EXIT_CODE_ERROR_STORAGE_PERMISSONS_NOT_GRANTED
-                )
-                return@registerForActivityResult
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            permissions.entries.forEach {
+                if (!it.value) {
+                    onCompleteListener?.onComplete(
+                        false,
+                        "storage permissions are required, please allow!",
+                        OnCompleteListener.EXIT_CODE_ERROR_STORAGE_PERMISSONS_NOT_GRANTED
+                    )
+                    return@registerForActivityResult
+                }
             }
         }
         when (currentProcess) {
